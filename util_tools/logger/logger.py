@@ -30,19 +30,27 @@ class Logger:
 
 
     def __init_log_path(self,time_stamp:int):
+        """
+        初始化日志文件路径
+        :param time_stamp:
+        :return:
+        """
         now_date = time_to_str(time_stamp).split(" ")[0]
         log_filename = os.path.join(env_config.base_work_path, "logs", now_date, f"{self.task_name}.log")
         if log_filename == self.log_file_name and self.fd is not None:
             return log_filename
         if not os.path.exists(os.path.join(env_config.base_work_path, "logs", now_date, f"{self.task_name}.log")):
             os.makedirs(os.path.join(env_config.base_work_path, "logs", now_date), exist_ok=True)
-        log_filename = os.path.join(env_config.base_work_path, "logs", now_date, f"{self.task_name}.log")
         if self.fd is not None:
             self.fd.close()
         self.fd = open(log_filename, "a", encoding="utf-8")
         self.log_file_name = log_filename
 
     def write_log_task(self):
+        """
+        日志写入任务
+        :return:
+        """
         while 1:
             log_context = self.log_queue.get()
             self.__init_log_path(log_context["log_timestamp"])
