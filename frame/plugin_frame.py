@@ -16,7 +16,7 @@ class PuginBase:
     def execute(self, data:DataContext):
         raise NotImplementedError("run method not implemented")
 
-    def get_results(self) -> Dict[str, Any]:
+    def get_results(self) -> DataContext:
         raise NotImplementedError("get_results method not implemented")
 
 
