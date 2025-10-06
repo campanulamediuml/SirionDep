@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*-coding:utf-8 -*-
 # Author     ：Campanula 梦芸 何
-from typing import Callable, Tuple, Dict, List
+from typing import Callable, Tuple, Dict, List, Optional
 
 from sirion_dep_thread_manager.thread_task import ThreadTask
 
@@ -10,7 +10,7 @@ class ThreadPoolManager:
     def __init__(self):
         self.thread_pool:Dict[int,ThreadTask] = {}
 
-    def add_task(self,task_name: str = "", task_function:Callable = None,
+    def add_task(self,task_name: str = "", task_function:Optional[Callable] = None,
                  args:Tuple = (), is_interval:bool=False, interval_time:int = 0):
         task = ThreadTask(task_name, task_function, args, is_interval, interval_time)
         self.thread_pool[task.thread.ident] = task
