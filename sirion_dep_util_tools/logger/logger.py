@@ -69,7 +69,7 @@ class Logger:
 logger_writer = Logger()
 
 
-def create_log_ctx(source,level:int,*msg):
+def create_log_ctx(source:str,level:int,*msg):
     log_timestamp = int(time.time() * 1000)
     time_string = time_to_str(log_timestamp)
     log_content = ' '.join([str(i) for i in msg])
@@ -86,19 +86,19 @@ def create_log_ctx(source,level:int,*msg):
     }
     logger_writer.log_queue.put(ctx)
 
-def dep_dbg(source, *msg):
+def dep_dbg(source:str, *msg):
     if env_config.log_level >= LOG_LEVEL_DEBUG:
         create_log_ctx(source,LOG_LEVEL_DEBUG,*msg)
 
-def dep_info(source, *msg):
+def dep_info(source:str, *msg):
     if env_config.log_level >= LOG_LEVEL_INFO:
         create_log_ctx(source,LOG_LEVEL_INFO,*msg)
 
-def dep_warn(source, *msg):
+def dep_warn(source:str, *msg):
     if env_config.log_level >= LOG_LEVEL_WARNING:
         create_log_ctx(source,LOG_LEVEL_WARNING,*msg)
 
-def dep_error(source, *msg):
+def dep_error(source:str, *msg):
     if env_config.log_level >= LOG_LEVEL_ERROR:
         create_log_ctx(source,LOG_LEVEL_ERROR,*msg)
 
