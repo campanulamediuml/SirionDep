@@ -10,12 +10,9 @@ class DataContext:
                  ctx_info: Optional[Dict] = None):
         self.__data = data
         self.__data_tag = data_tag
-        self.__data_timestamp_watermark = data_timestamp_watermark
-        self.__ctx_info = ctx_info
-        if self.__ctx_info is None:
-            self.__ctx_info = {}
-        if self.__data_timestamp_watermark is None:
-            self.__data_timestamp_watermark = int(time.time() * 1000)
+        self.__data_timestamp_watermark = data_timestamp_watermark if data_timestamp_watermark is not None else int(
+            time.time() * 1000)
+        self.__ctx_info = ctx_info if ctx_info is not None else {}
 
     def get_watermark(self) -> int:
         """

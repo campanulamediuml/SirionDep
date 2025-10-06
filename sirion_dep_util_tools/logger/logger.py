@@ -35,7 +35,8 @@ class Logger:
         self.log_file_name: str = ""
         self.log_queue: SimpleQueue[LogCtx] = SimpleQueue()
         self.__init_log_path(int(time.time() * 1000))
-        self.log_thread = threading.Thread(target=self.write_log_task, daemon=True).start()
+        self.log_thread = threading.Thread(target=self.write_log_task, daemon=True)
+        self.log_thread.start()
 
     def __init_log_path(self, time_stamp: int):
         """
