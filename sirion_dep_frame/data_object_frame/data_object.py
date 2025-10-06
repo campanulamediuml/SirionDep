@@ -6,7 +6,8 @@ from typing import Dict, Optional
 
 
 class DataContext:
-    def __init__(self, data: Dict, data_tag:str, data_timestamp_watermark:Optional[int] = None, ctx_info:Optional[Dict]=None):
+    def __init__(self, data: Dict, data_tag: str, data_timestamp_watermark: Optional[int] = None,
+                 ctx_info: Optional[Dict] = None):
         self.__data = data
         self.__data_tag = data_tag
         self.__data_timestamp_watermark = data_timestamp_watermark
@@ -14,7 +15,7 @@ class DataContext:
         if self.__ctx_info is None:
             self.__ctx_info = {}
         if self.__data_timestamp_watermark is None:
-            self.__data_timestamp_watermark = int(time.time()*1000)
+            self.__data_timestamp_watermark = int(time.time() * 1000)
 
     def get_watermark(self) -> int:
         """
@@ -37,7 +38,7 @@ class DataContext:
         """
         return self.__ctx_info
 
-    def set_data(self, new_data:Dict):
+    def set_data(self, new_data: Dict):
         """
         更新数据对象
         :param new_data:
@@ -45,7 +46,7 @@ class DataContext:
         """
         self.__data.update(new_data)
 
-    def update_context(self, new_ctx:Dict):
+    def update_context(self, new_ctx: Dict):
         """
         更新上下文信息
         :param new_ctx:

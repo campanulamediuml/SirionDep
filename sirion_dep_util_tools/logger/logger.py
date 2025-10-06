@@ -2,10 +2,10 @@
 # -*-coding:utf-8 -*-
 # Author     ：Campanula 梦芸 何
 import os
+import threading
 import time
 from queue import SimpleQueue
 from typing import TypedDict, List, TextIO, Optional, Dict
-import threading
 
 from sirion_dep_init_env.init import env_config
 from sirion_dep_util_tools.time_tool.time_tool import time_to_str
@@ -22,22 +22,22 @@ LOG_LEVEL_TAG_DICT: Dict[int, str] = {
     LOG_LEVEL_ERROR: 'ERROR',
 }
 
+
 class LogCtx(TypedDict):
-    log_conent:List[str]
-    log_timestamp:int
+    log_conent: List[str]
+    log_timestamp: int
 
 
 class Logger:
     def __init__(self, task_name: str = "default_task"):
-        self.task_name:str = task_name
-        self.fd:Optional[TextIO] = None
-        self.log_file_name:str = ""
+        self.task_name: str = task_name
+        self.fd: Optional[TextIO] = None
+        self.log_file_name: str = ""
         self.log_queue: SimpleQueue[LogCtx] = SimpleQueue()
-        self.__init_log_path(int(time.time()*1000))
+        self.__init_log_path(int(time.time() * 1000))
         self.log_thread = threading.Thread(target=self.write_log_task, daemon=True).start()
 
-
-    def __init_log_path(self,time_stamp:int):
+    def __init_log_path(self, time_stamp: int):
         """
         初始化日志文件路径
         :param time_stamp:
@@ -66,43 +66,43 @@ class Logger:
                 print(line, end="")
                 self.fd.write(f"{line}")
 
+
 logger_writer = Logger()
 
 
-def create_log_ctx(source:str,level:int,*msg):
+def create_log_ctx(source: str, level: int, *msg):
     log_timestamp = int(time.time() * 1000)
     time_string = time_to_str(log_timestamp)
     log_content = ' '.join([str(i) for i in msg])
-    log_data_list = ["[%s][%s][%s][%s]%s\n"%(
+    log_data_list = ["[%s][%s][%s][%s]%s\n" % (
         time_string,
         log_timestamp,
         source,
         LOG_LEVEL_TAG_DICT[level],
         line
-    )for line in log_content.split('\n')]
-    ctx:LogCtx = {
+    ) for line in log_content.split('\n')]
+    ctx: LogCtx = {
         "log_conent": log_data_list,
         "log_timestamp": log_timestamp,
     }
     logger_writer.log_queue.put(ctx)
 
-def dep_dbg(source:str, *msg):
+
+def dep_dbg(source: str, *msg):
     if env_config.log_level >= LOG_LEVEL_DEBUG:
-        create_log_ctx(source,LOG_LEVEL_DEBUG,*msg)
+        create_log_ctx(source, LOG_LEVEL_DEBUG, *msg)
 
-def dep_info(source:str, *msg):
+
+def dep_info(source: str, *msg):
     if env_config.log_level >= LOG_LEVEL_INFO:
-        create_log_ctx(source,LOG_LEVEL_INFO,*msg)
+        create_log_ctx(source, LOG_LEVEL_INFO, *msg)
 
-def dep_warn(source:str, *msg):
+
+def dep_warn(source: str, *msg):
     if env_config.log_level >= LOG_LEVEL_WARNING:
-        create_log_ctx(source,LOG_LEVEL_WARNING,*msg)
+        create_log_ctx(source, LOG_LEVEL_WARNING, *msg)
 
-def dep_error(source:str, *msg):
+
+def dep_error(source: str, *msg):
     if env_config.log_level >= LOG_LEVEL_ERROR:
-        create_log_ctx(source,LOG_LEVEL_ERROR,*msg)
-
-
-
-
-
+        create_log_ctx(source, LOG_LEVEL_ERROR, *msg)

@@ -4,7 +4,7 @@
 import time
 
 
-def time_to_str(time_stamp:int) -> str:
+def time_to_str(time_stamp: int) -> str:
     """
     将时间戳转换为字符串格式，精确到秒
     :param time_stamp: 时间戳，单位毫秒
@@ -13,7 +13,8 @@ def time_to_str(time_stamp:int) -> str:
     time_array = time.localtime(time_stamp / 1000)
     return time.strftime("%Y-%m-%d %H:%M:%S", time_array)
 
-def str_to_time(time_str:str) -> int:
+
+def str_to_time(time_str: str) -> int:
     """
     将字符串格式的时间转换为时间戳，精确到秒
     :param time_str: 格式化的时间字符串，格式为 "YYYY-MM-DD HH:MM:SS"
