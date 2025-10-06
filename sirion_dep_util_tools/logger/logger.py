@@ -70,35 +70,35 @@ logger_writer = Logger()
 
 
 def create_log_ctx(source,level:int,*msg):
-        log_timestamp = int(time.time() * 1000)
-        time_string = time_to_str(log_timestamp)
-        log_content = ' '.join([str(i) for i in msg])
-        log_data_list = ["[%s][%s][%s][%s]%s\n"%(
-            time_string,
-            log_timestamp,
-            source,
-            LOG_LEVEL_TAG_DICT[level],
-            line
-        )for line in log_content.split('\n')]
-        ctx:LogCtx = {
-            "log_conent": log_data_list,
-            "log_timestamp": log_timestamp,
-        }
-        logger_writer.log_queue.put(ctx)
+    log_timestamp = int(time.time() * 1000)
+    time_string = time_to_str(log_timestamp)
+    log_content = ' '.join([str(i) for i in msg])
+    log_data_list = ["[%s][%s][%s][%s]%s\n"%(
+        time_string,
+        log_timestamp,
+        source,
+        LOG_LEVEL_TAG_DICT[level],
+        line
+    )for line in log_content.split('\n')]
+    ctx:LogCtx = {
+        "log_conent": log_data_list,
+        "log_timestamp": log_timestamp,
+    }
+    logger_writer.log_queue.put(ctx)
 
-def dbg(source, *msg):
+def dep_dbg(source, *msg):
     if env_config.log_level >= LOG_LEVEL_DEBUG:
         create_log_ctx(source,LOG_LEVEL_DEBUG,*msg)
 
-def info(source, *msg):
+def dep_info(source, *msg):
     if env_config.log_level >= LOG_LEVEL_INFO:
         create_log_ctx(source,LOG_LEVEL_INFO,*msg)
 
-def warn(source, *msg):
+def dep_warn(source, *msg):
     if env_config.log_level >= LOG_LEVEL_WARNING:
         create_log_ctx(source,LOG_LEVEL_WARNING,*msg)
 
-def error(source, *msg):
+def dep_error(source, *msg):
     if env_config.log_level >= LOG_LEVEL_ERROR:
         create_log_ctx(source,LOG_LEVEL_ERROR,*msg)
 
