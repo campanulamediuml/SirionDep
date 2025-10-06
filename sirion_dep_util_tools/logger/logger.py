@@ -23,8 +23,6 @@ LOG_LEVEL_TAG_DICT: Dict[int, str] = {
 }
 
 class LogCtx(TypedDict):
-    log_level:int
-    log_source:str
     log_conent:List[str]
     log_timestamp:int
 
@@ -36,7 +34,7 @@ class Logger:
         self.log_file_name:str = ""
         self.log_queue: SimpleQueue[LogCtx] = SimpleQueue()
         self.__init_log_path(int(time.time()*1000))
-        self.log_thread = threading.Thread(target=self.write_log_task, daemon=True)
+        self.log_thread = threading.Thread(target=self.write_log_task, daemon=True).start()
 
 
     def __init_log_path(self,time_stamp:int):
@@ -66,6 +64,43 @@ class Logger:
             self.__init_log_path(log_context["log_timestamp"])
             for line in log_context["log_conent"]:
                 print(line, end="")
+                self.fd.write(f"{line}")
+
+logger_writer = Logger()
+
+
+def create_log_ctx(source,level:int,*msg):
+        log_timestamp = int(time.time() * 1000)
+        time_string = time_to_str(log_timestamp)
+        log_content = ' '.join([str(i) for i in msg])
+        log_data_list = ["[%s][%s][%s][%s]%s\n"%(
+            time_string,
+            log_timestamp,
+            source,
+            LOG_LEVEL_TAG_DICT[level],
+            line
+        )for line in log_content.split('\n')]
+        ctx:LogCtx = {
+            "log_conent": log_data_list,
+            "log_timestamp": log_timestamp,
+        }
+        logger_writer.log_queue.put(ctx)
+
+def dbg(source, *msg):
+    if env_config.log_level >= LOG_LEVEL_DEBUG:
+        create_log_ctx(source,LOG_LEVEL_DEBUG,*msg)
+
+def info(source, *msg):
+    if env_config.log_level >= LOG_LEVEL_INFO:
+        create_log_ctx(source,LOG_LEVEL_INFO,*msg)
+
+def warn(source, *msg):
+    if env_config.log_level >= LOG_LEVEL_WARNING:
+        create_log_ctx(source,LOG_LEVEL_WARNING,*msg)
+
+def error(source, *msg):
+    if env_config.log_level >= LOG_LEVEL_ERROR:
+        create_log_ctx(source,LOG_LEVEL_ERROR,*msg)
 
 
 
