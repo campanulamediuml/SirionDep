@@ -2,10 +2,12 @@
 # -*-coding:utf-8 -*-
 # Author     ：Campanula 梦芸 何
 import time
+import traceback
 from threading import Thread
 from typing import Callable, Tuple, Optional
 
 from sirion_dep_frame.plugin_frame import PuginBase
+from sirion_dep_util_tools.logger.logger import dep_error, DEP_TAG
 
 
 class ThreadTask:
@@ -21,11 +23,16 @@ class ThreadTask:
 
     def task_run(self):
         while True:
-            self.task_function(*self.args)
-            if self.is_interval:
-                time.sleep(self.interval_time)
-            else:
-                return
+            try:
+                self.task_function(*self.args)
+                if self.is_interval:
+                    time.sleep(self.interval_time)
+                else:
+                    return
+            except Exception as e:
+                err_info = traceback.format_exc()
+                dep_error(DEP_TAG,err_info)
+                dep_error(DEP_TAG,"任务执行失败-->",e)
 
 
 

@@ -25,4 +25,6 @@ class ThreadPoolManager:
     def count_running_tasks(self) -> int:
         return len(self.thread_pool)
 
+t_pool_manager = ThreadPoolManager()
+
 

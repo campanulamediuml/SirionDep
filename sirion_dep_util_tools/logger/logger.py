@@ -22,6 +22,7 @@ LOG_LEVEL_TAG_DICT: Dict[int, str] = {
     LOG_LEVEL_ERROR: 'ERROR',
 }
 
+DEP_TAG = "DEP"
 
 class LogCtx(TypedDict):
     log_conent: List[str]
