@@ -50,3 +50,6 @@ class DataContext:
         :return:
         """
         self.__ctx_info.update(new_ctx)
+
+    def get_data_tag(self) -> str:
+        return self.__data_tag
