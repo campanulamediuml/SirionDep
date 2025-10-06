@@ -89,20 +89,20 @@ def create_log_ctx(source: str, level: int, *msg):
 
 
 def dep_dbg(source: str, *msg):
-    if env_config.log_level >= LOG_LEVEL_DEBUG:
+    if env_config.log_level <= LOG_LEVEL_DEBUG:
         create_log_ctx(source, LOG_LEVEL_DEBUG, *msg)
 
 
 def dep_info(source: str, *msg):
-    if env_config.log_level >= LOG_LEVEL_INFO:
+    if env_config.log_level <= LOG_LEVEL_INFO:
         create_log_ctx(source, LOG_LEVEL_INFO, *msg)
 
 
 def dep_warn(source: str, *msg):
-    if env_config.log_level >= LOG_LEVEL_WARNING:
+    if env_config.log_level <= LOG_LEVEL_WARNING:
         create_log_ctx(source, LOG_LEVEL_WARNING, *msg)
 
 
 def dep_error(source: str, *msg):
-    if env_config.log_level >= LOG_LEVEL_ERROR:
+    if env_config.log_level <= LOG_LEVEL_ERROR:
         create_log_ctx(source, LOG_LEVEL_ERROR, *msg)
