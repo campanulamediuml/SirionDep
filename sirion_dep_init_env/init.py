@@ -11,7 +11,7 @@ class ConfigTemplate(BaseModel):
     log_level: int
 
 
-env_config:ConfigTemplate = ConfigTemplate.parse_file("config.json")
+env_config:ConfigTemplate = ConfigTemplate.model_validate_json(open("config.json",'r').read())
 
 LOG_PATH = os.path.join(env_config.base_work_path, "logs")
 os.makedirs(LOG_PATH, exist_ok=True)
