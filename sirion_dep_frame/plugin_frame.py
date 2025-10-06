@@ -6,7 +6,7 @@ from typing import Dict, Any, Optional, List
 from sirion_dep_frame.data_object_frame.data_object import DataContext
 
 
-class PuginBase:
+class PluginBase:
     def __init__(self, global_config: Dict):
         self.global_config = global_config
 
