@@ -65,7 +65,8 @@ class Logger:
             self.__init_log_path(log_context["log_timestamp"])
             for line in log_context["log_conent"]:
                 print(line, end="")
-                self.fd.write(f"{line}")
+                if self.fd is not None:
+                    self.fd.write(f"{line}")
 
 
 logger_writer = Logger()
