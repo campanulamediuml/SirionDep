@@ -4,17 +4,27 @@
 import os
 import time
 from queue import SimpleQueue
-from typing import TypedDict, List, TextIO, Optional
+from typing import TypedDict, List, TextIO, Optional, Dict
 import threading
 
 from sirion_dep_init_env.init import env_config
 from sirion_dep_util_tools.time_tool.time_tool import time_to_str
 
+LOG_LEVEL_DEBUG = 0
+LOG_LEVEL_INFO = 1
+LOG_LEVEL_WARNING = 2
+LOG_LEVEL_ERROR = 3
 
+LOG_LEVEL_TAG_DICT: Dict[int, str] = {
+    LOG_LEVEL_DEBUG: 'DEBUG',
+    LOG_LEVEL_INFO: 'INFO',
+    LOG_LEVEL_WARNING: 'WARNING',
+    LOG_LEVEL_ERROR: 'ERROR',
+}
 
 class LogCtx(TypedDict):
     log_level:int
-    log_level_tag:str
+    log_source:str
     log_conent:List[str]
     log_timestamp:int
 
@@ -55,10 +65,8 @@ class Logger:
             log_context = self.log_queue.get()
             self.__init_log_path(log_context["log_timestamp"])
             for line in log_context["log_conent"]:
-                log_line = f"{time_to_str(log_context['log_timestamp'])} [{log_context['log_level_tag']}] {line}\n"
-                print(log_line, end="")
-                if self.fd is not None:
-                    self.fd.write(log_line)
+                print(line, end="")
+
 
 
 

@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 class ConfigTemplate(BaseModel):
     base_work_path: str
+    log_level: int
 
 
 env_config:ConfigTemplate = ConfigTemplate.parse_file("config.json")
