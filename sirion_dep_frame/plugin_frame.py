@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*-coding:utf-8 -*-
 # Author     ：Campanula 梦芸 何
-from typing import Dict, Any
+from typing import Dict, Any, Optional, List
 
 from sirion_dep_frame.data_object_frame.data_object import DataContext
 
@@ -13,8 +13,8 @@ class PuginBase:
     def initial_work(self, parameters: Dict[str, Any]):
         raise NotImplementedError("initial_work method not implemented")
 
-    def execute(self, data: DataContext):
+    def run(self, data: List[DataContext]):
         raise NotImplementedError("run method not implemented")
 
-    def get_results(self) -> DataContext:
+    def get_results(self) -> Optional[List[DataContext]]:
         raise NotImplementedError("get_results method not implemented")
