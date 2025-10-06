@@ -7,8 +7,8 @@ from queue import SimpleQueue
 from typing import TypedDict, List, TextIO, Optional
 import threading
 
-from init_env.init import env_config
-from util_tools.time_tool.time_tool import time_to_str
+from sirion_dep_init_env.init import env_config
+from sirion_dep_util_tools.time_tool.time_tool import time_to_str
 
 
 

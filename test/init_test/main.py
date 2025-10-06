@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*-coding:utf-8 -*-
 # Author     ：Campanula 梦芸 何
-from init_env.init import config
+from sirion_dep_init_env.init import config
 
 new_confg = config
 

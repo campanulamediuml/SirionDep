@@ -3,7 +3,7 @@
 # Author     ：Campanula 梦芸 何
 from typing import Dict, Any
 
-from frame.data_object_frame.data_object import DataContext
+from sirion_dep_frame.data_object_frame.data_object import DataContext
 
 
 class PuginBase:
